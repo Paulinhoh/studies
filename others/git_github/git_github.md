@@ -81,7 +81,7 @@ github.com → settings → Developer settings → Personal access tokens → to
 
 
 git config --global credential.helper cache # para salvar só durante um tempo
-git config --global credential.helper cache # para para sempre na maquina
+git config --global credential.helper store # para para sempre na maquina
 
 git clone URL
 # ira pedir o usuario do github e a senha que no lugar coloca o token
