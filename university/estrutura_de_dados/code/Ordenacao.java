@@ -1,6 +1,10 @@
 public class Ordenacao {
 
-    // -------------------------- quick sort -------------------------------
+    // -------------------------- counting sort --------------------------------
+    // cost:
+    static void countingSort(int[] arr) {}
+
+    // -------------------------- quick sort -----------------------------------
     // cost:
     static void quickSort(int[] arr, int start_pointer, int end_pointer) {
 
