@@ -2,12 +2,12 @@ public class Ordenacao {
 
     // -------------------------- counting sort --------------------------------
     // cost:
-    static void countingSort(int[] arr) {}
+    static void countingSort(int[] arr) {
+    }
 
     // -------------------------- quick sort -----------------------------------
     // cost:
     static void quickSort(int[] arr, int start_pointer, int end_pointer) {
-
         if (start_pointer < end_pointer) {
             int indexPivot = partition(arr, start_pointer, end_pointer);
 
@@ -17,7 +17,6 @@ public class Ordenacao {
     }
 
     static int partition(int[] arr, int start_pointer, int end_pointer) {
-
         int pivot = arr[end_pointer];
         int i = start_pointer;
 
@@ -39,54 +38,46 @@ public class Ordenacao {
 
     // -------------------------- merge sort -------------------------------
     // cost:
-    static void mergeSort(int[] arr, int start_pointer, int end_pointer) {
-
-        if (end_pointer - start_pointer > 1) {
-            int mid_pointer = (end_pointer + start_pointer) / 2;
-
-            mergeSort(arr, start_pointer, mid_pointer);
-            mergeSort(arr, mid_pointer, end_pointer);
-            merge(arr, start_pointer, mid_pointer, end_pointer);
+    static void mergeSort(int[] arr, int end_pointer) {
+        if (end_pointer < 2) {
+            return;
         }
+        int mid = end_pointer / 2;
+        int[] l = new int[mid];
+        int[] r = new int[end_pointer - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = arr[i];
+        }
+        for (int i = mid; i < end_pointer; i++) {
+            r[i - mid] = arr[i];
+        }
+        mergeSort(l, mid);
+        mergeSort(r, end_pointer - mid);
+
+        merge(arr, l, r, mid, end_pointer - mid);
     }
 
-    static void merge(int[] arr, int start_pointer, int mid_pointer, int end_pointer) {
-        // int[] left = { arr[start_pointer], arr[mid_pointer] }; // <corrigir>
-        int[] left = new int[mid_pointer];
-        int[] right = new int[end_pointer - mid_pointer];
-
-        for (int x = 0; x < mid_pointer; x++) {
-            left[x] = arr[x];
-        }
-
-        for (int x = mid_pointer; x < end_pointer; x++) {
-            right[x-mid_pointer] = arr[x];
-        }
-
-        int top_left = 0;
-        int top_right = 0;
-
-        for (int k = start_pointer; k < end_pointer; k++) {
-            if (top_left >= left.length) {
-                arr[k] = right[top_right];
-                top_right++;
-            } else if (top_right >= right.length) {
-                arr[k] = left[top_left];
-                top_left++;
-            } else if (left[top_left] < right[top_right]) {
-                arr[k] = left[top_left];
-                top_left++;
+    static void merge(int[] arr, int[] l, int[] r, int left, int right) {
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right) {
+            if (l[i] <= r[j]) {
+                arr[k++] = l[i++];
             } else {
-                arr[k] = right[top_right];
-                top_right++;
+                arr[k++] = r[j++];
             }
+        }
+        while (i < left) {
+            arr[k++] = l[i++];
+        }
+        while (j < right) {
+            arr[k++] = r[j++];
         }
     }
 
     // -------------------------- insertion sort -------------------------------
     // cost:
     static void insertionSort(int[] arr) {
-
         int size = arr.length;
 
         for (int i = 1; i < size; i++) {
@@ -105,7 +96,6 @@ public class Ordenacao {
     // -------------------------- bubble sort -------------------------------
     // cost:
     static void bubbleSort(int[] arr) {
-
         int size = arr.length;
 
         for (int j = 0; j < size - 1; j++) {
@@ -122,7 +112,6 @@ public class Ordenacao {
     // -------------------------- selection sort -------------------------------
     // cost:
     static void selectionSort(int[] arr) {
-
         int size = arr.length;
 
         for (int j = 0; j < size; j++) {
@@ -144,10 +133,9 @@ public class Ordenacao {
 
     // -------------------------- main -----------------------------------------
     public static void main(String[] args) {
-
         int[] array = { 3, 9, 2, 5, 1, 7 };
 
-        mergeSort(array, 0, array.length - 1);
+        mergeSort(array, array.length);
 
         System.out.println("\nOrdened array:");
 
