@@ -1,13 +1,41 @@
 public class Ordenacao {
-
     // -------------------------- counting sort --------------------------------
-    // cost:
-    static void countingSort(int[] arr) {
+    // Custo: O(n)
+    public static void countSort(int[] arr, int size) {
+        int[] output = new int[size + 1];
+
+        int max = arr[0];
+        for (int i = 1; i < size; i++) {
+            if (arr[i] > max)
+                max = arr[i];
+        }
+        int[] count = new int[max + 1];
+
+        for (int i = 0; i < max; ++i) {
+            count[i] = 0;
+        }
+
+        for (int i = 0; i < size; i++) {
+            count[arr[i]]++;
+        }
+
+        for (int i = 1; i <= max; i++) {
+            count[i] += count[i - 1];
+        }
+
+        for (int i = size - 1; i >= 0; i--) {
+            output[count[arr[i]] - 1] = arr[i];
+            count[arr[i]]--;
+        }
+
+        for (int i = 0; i < size; i++) {
+            arr[i] = output[i];
+        }
     }
 
     // -------------------------- quick sort -----------------------------------
-    // cost:
-    static void quickSort(int[] arr, int start_pointer, int end_pointer) {
+    // Custo: O(n*log(n)) --> pivo aleatorio | O(n²) --> pivo ultimo elemento
+    public static void quickSort(int[] arr, int start_pointer, int end_pointer) {
         if (start_pointer < end_pointer) {
             int indexPivot = partition(arr, start_pointer, end_pointer);
 
@@ -16,7 +44,7 @@ public class Ordenacao {
         }
     }
 
-    static int partition(int[] arr, int start_pointer, int end_pointer) {
+    private static int partition(int[] arr, int start_pointer, int end_pointer) {
         int pivot = arr[end_pointer];
         int i = start_pointer;
 
@@ -37,8 +65,8 @@ public class Ordenacao {
     }
 
     // -------------------------- merge sort -------------------------------
-    // cost:
-    static void mergeSort(int[] arr, int end_pointer) {
+    // Custo: O(n*log(n))
+    public static void mergeSort(int[] arr, int end_pointer) {
         if (end_pointer < 2) {
             return;
         }
@@ -58,7 +86,7 @@ public class Ordenacao {
         merge(arr, l, r, mid, end_pointer - mid);
     }
 
-    static void merge(int[] arr, int[] l, int[] r, int left, int right) {
+    private static void merge(int[] arr, int[] l, int[] r, int left, int right) {
         int i = 0, j = 0, k = 0;
         while (i < left && j < right) {
             if (l[i] <= r[j]) {
@@ -76,8 +104,8 @@ public class Ordenacao {
     }
 
     // -------------------------- insertion sort -------------------------------
-    // cost:
-    static void insertionSort(int[] arr) {
+    // Custo: O(n²)
+    public static void insertionSort(int[] arr) {
         int size = arr.length;
 
         for (int i = 1; i < size; i++) {
@@ -94,8 +122,8 @@ public class Ordenacao {
     }
 
     // -------------------------- bubble sort -------------------------------
-    // cost:
-    static void bubbleSort(int[] arr) {
+    // Custo: O(n²)
+    public static void bubbleSort(int[] arr) {
         int size = arr.length;
 
         for (int j = 0; j < size - 1; j++) {
@@ -110,8 +138,8 @@ public class Ordenacao {
     }
 
     // -------------------------- selection sort -------------------------------
-    // cost:
-    static void selectionSort(int[] arr) {
+    // Custo: O(n²)
+    public static void selectionSort(int[] arr) {
         int size = arr.length;
 
         for (int j = 0; j < size; j++) {
@@ -128,19 +156,6 @@ public class Ordenacao {
                 arr[j] = arr[indexMin];
                 arr[indexMin] = aux;
             }
-        }
-    }
-
-    // -------------------------- main -----------------------------------------
-    public static void main(String[] args) {
-        int[] array = { 3, 9, 2, 5, 1, 7 };
-
-        mergeSort(array, array.length);
-
-        System.out.println("\nOrdened array:");
-
-        for (int x : array) {
-            System.out.print(x + " ");
         }
     }
 }
